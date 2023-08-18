@@ -1,0 +1,32 @@
+{
+  "name": "todo-list-cli",
+  "version": "1.0.0",
+  "description": "Todo List for an avg CLI user!",
+  "main": "index.js",
+  "bin": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js",
+    "start": "node index.js",
+    "build": "pkg ."
+  },
+  "pkg": {
+    "scripts": "build/**/*.js",
+    "assets": "views/**/*",
+    "targets": [
+      "node16-win-x64"
+    ],
+    "outputPath": "dist",
+    "output": "test"
+  },
+  "keywords": [
+    "node.js",
+    "javascript"
+  ],
+  "author": "iHaroon29",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
