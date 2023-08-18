@@ -1,2 +1,2 @@
 # Todo-CLI
-Todo List for your avg CLI user :)
+Todo List App for your avg CLI user :)
