@@ -12,10 +12,10 @@ const rl = readline.createInterface({
   input: process.stdin,
 })
 
-;async () => {
+;(async () => {
   const data = await fileReader('./todo.txt')
   tempTodoList.push(...data)
-}
+})()
 
 const responseHandler = (input) => {
   const arg = input.trim().split(' ')
@@ -39,23 +39,37 @@ const responseHandler = (input) => {
       }
       break
     case 'del':
-      tempTodoList.splice(arg[1] - 1, 1)
+      if (Number(arg[1]) > tempTodoList.length) {
+        return process.stdout.write(
+          "Invalid index, please use 'view' to get the list of available todos!\n"
+        )
+      }
+      if (Number(arg[1]) === 0) {
+        return process.stdout.write(
+          "Invalid index, please use 'view' to get the list of available todos!\n"
+        )
+      }
+
+      tempTodoList.splice(Number(arg[1]) - 1, 1)
       process.stdout.write(
         `Todo Deleted at index - ${arg[1]}, current count - ${tempTodoList.length}\n`
       )
       break
     case 'comp':
-      tempTodoList[arg[1] - 1] += ' - Completed'
+      tempTodoList[
+        Number(arg[1]) - 1
+      ] += ` - Completed on ${new Date().toDateString()}`
       process.stdout.write(
         `Todo updated at index - ${arg[1]}, current count - ${tempTodoList.length}\n`
       )
       break
     case 'help':
       const list = [
-        'Use "add" <text> to add todos.',
-        'Use "view" to view all todos.',
+        'Use "add" <text> to add todo.',
+        'Use "view" to view all todo.',
         'Use "del" <index> to delete todo at that index.',
         'Use "comp" <index> to strike todo.',
+        'Use "clear" clean terminal.',
         'Use "exit" to save todos and exit.',
       ]
       list.forEach((item) => {
@@ -76,6 +90,9 @@ const responseHandler = (input) => {
       break
     case 'clear':
       console.clear()
+      process.stdout.write(
+        '>: Welcome to a Basic Todo Application using built on CLI. Type help to view commands.\n'
+      )
       break
     default:
       process.stdout.write(
